@@ -38,8 +38,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateTimeField()),
                 ('type', models.CharField(choices=[('pending', 'pending'), ('Approved to Interview', 'Approved to Interview'), ('being interviewed', 'being interviewed'), ('Approved for Hire', 'Approved for Hire'), ('rejected', 'rejected')], max_length=100)),
-                ('Interviewer', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='usermanagement.interviewer')),
-                ('applicant', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='usermanagement.applicant')),
+                ('Interviewer', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='API.interviewer')),
+                ('applicant', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='API.applicant')),
             ],
         ),
         migrations.CreateModel(
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField(max_length=500)),
-                ('interview', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='usermanagement.interview')),
+                ('interview', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='API.interview')),
             ],
         ),
     ]
