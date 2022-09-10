@@ -3,7 +3,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
-from API.models import Interviewer, Feedback, Interview, Applicant
+from .models import Interviewer, Feedback, Interview, Applicant
 
 
 class ApplicantSerializer(ModelSerializer):
