@@ -6,8 +6,8 @@ class Applicant(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     age = models.CharField(max_length=10)
     gender = models.CharField(choices=[('male', 'male'), ('female', 'female'), ('other', 'other')], max_length=100)
-    linkedin_address = models.URLField
-    resume = models.FileField
+    linkedin_address = models.URLField(default='')
+    resume = models.FileField(default='')
     status = models.CharField(choices=[('phone', 'phone'),
                                        ('code', 'code'),
                                        ('technical', 'technical'),

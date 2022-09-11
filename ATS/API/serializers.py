@@ -64,7 +64,7 @@ class InterviewSerializer(ModelSerializer):
 
     class Meta:
         model = Interview
-        fields = ('applicant', 'interview', 'date', 'type')
+        fields = ('applicant', 'interviewer', 'date', 'type')
 
 
 class FeedbackSerializer(ModelSerializer):
