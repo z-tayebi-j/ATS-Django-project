@@ -36,3 +36,13 @@ class InterviewViewSet(viewsets.ModelViewSet):
         user = self.request.user
         interviewer = user.interviewer
         serializer.save(interviewer=interviewer)
+
+
+class FeedbackViewSet(viewsets.ModelViewSet):
+    serializer_class = FeedbackSerializer
+    authentication_classes = []
+    permission_classes = []
+    queryset = Feedback.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
