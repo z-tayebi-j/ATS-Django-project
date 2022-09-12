@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions, viewsets, authentication
 from rest_framework.response import Response
 
 from .models import Applicant, Interview, Interviewer, Feedback
 from .serializers import ApplicantSerializer, InterviewSerializer, InterviewerSerializer, FeedbackSerializer
+from .permissions import IsInterviewer
 
 
 class CreateInterviewerAPIView(generics.CreateAPIView):
@@ -15,8 +16,8 @@ class CreateInterviewerAPIView(generics.CreateAPIView):
 
 class ApplicantViewSet(viewsets.ModelViewSet):
     serializer_class = ApplicantSerializer
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Applicant.objects.all()
 
     #
@@ -24,6 +25,9 @@ class ApplicantViewSet(viewsets.ModelViewSet):
         user = self.request.user
         interviewer = user.interviewer
         serializer.save(interviewer=interviewer)
+
+    def get_permissions(self):
+        return permissions.IsAuthenticated(), IsInterviewer(),
 
 
 class InterviewViewSet(viewsets.ModelViewSet):
