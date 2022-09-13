@@ -34,8 +34,8 @@ class InterviewViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.BasePermission]
 
     def get_queryset(self):
-        user = self.request.user
-        return Interview.objects.filter(applicant=user.id)
+        user = self.request.user.interviewer
+        return Interview.objects.filter(interviewer=user)
 
     def perform_create(self, serializer):
         user = self.request.user
@@ -45,9 +45,12 @@ class InterviewViewSet(viewsets.ModelViewSet):
 
 class FeedbackViewSet(viewsets.ModelViewSet):
     serializer_class = FeedbackSerializer
-    authentication_classes = []
-    permission_classes = []
-    queryset = Feedback.objects.all()
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.BasePermission]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Feedback.objects.filter(interview=user.id)
 
     def perform_create(self, serializer):
         serializer.save()
