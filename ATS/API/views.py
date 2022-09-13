@@ -4,7 +4,6 @@ from rest_framework.response import Response
 
 from .models import Applicant, Interview, Interviewer, Feedback
 from .serializers import ApplicantSerializer, InterviewSerializer, InterviewerSerializer, FeedbackSerializer
-from .permissions import IsInterviewer
 
 
 class CreateInterviewerAPIView(generics.CreateAPIView):
@@ -25,9 +24,6 @@ class ApplicantViewSet(viewsets.ModelViewSet):
         user = self.request.user
         interviewer = user.interviewer
         serializer.save(interviewer=interviewer)
-
-    def get_permissions(self):
-        return permissions.IsAuthenticated(), IsInterviewer(),
 
 
 class InterviewViewSet(viewsets.ModelViewSet):
