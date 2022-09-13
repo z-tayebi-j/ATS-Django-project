@@ -19,8 +19,8 @@ class ApplicantViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return Applicant.objects.filter(user=user)
+        user = self.request.user.interviewer
+        return Interview.objects.filter(interviewer=user).values('applicant')
 
     def perform_create(self, serializer):
         user = self.request.user
@@ -31,7 +31,7 @@ class ApplicantViewSet(viewsets.ModelViewSet):
 class InterviewViewSet(viewsets.ModelViewSet):
     serializer_class = InterviewSerializer
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.BasePermission]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user.interviewer
@@ -46,7 +46,7 @@ class InterviewViewSet(viewsets.ModelViewSet):
 class FeedbackViewSet(viewsets.ModelViewSet):
     serializer_class = FeedbackSerializer
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.BasePermission]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
